@@ -1,5 +1,5 @@
 # What is it?
-Python wrapper for the Instagram API and the Instagram Graph API.
+Python wrapper for the Instagram API and the Instagram Graph API v23.
 
 # Benefits of using this library
 - Publish posts, reels and stories on Instagram.
