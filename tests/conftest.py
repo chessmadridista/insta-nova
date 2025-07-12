@@ -16,5 +16,5 @@ def access_token():
 @pytest.fixture
 def client(access_token):
     """Create an Instagram client instance for testing."""
-    from insta_nova.client import InstagramClient
-    return InstagramClient(access_token)
+    from insta_nova.client import Client
+    return Client(access_token)
