@@ -35,6 +35,32 @@ class Client:
     
     def __init__(self, access_token=None):
         self.access_token = access_token
+    
+    @classmethod
+    def set_application_credentials(cls, app_id: str, app_secret: str) -> None:
+        """
+        Set the application credentials for interacting with the Instagram Graph API.
+
+        Args:
+            app_id (str): The application ID.
+            app_secret (str): The application secret key.
+
+        Raises:
+            CredentialError: If app_id or app_secret is not a string.
+        """
+        
+        if not isinstance(app_id, str):
+            raise CredentialError("app_id must be a string")
+        if not isinstance(app_secret, str):
+            raise CredentialError("app_secret must be a string")
+        
+        if not app_id.strip():
+            raise CredentialError("app_id cannot be empty or whitespace-only")
+        if not app_secret.strip():
+            raise CredentialError("app_secret cannot be empty or whitespace-only")
+
+        cls._app_id = app_id
+        cls._app_secret = app_secret
 
     def get_access_token(self, authorization_code):
         """
@@ -67,28 +93,3 @@ class Client:
     
         return "Some value"
     
-    @classmethod
-    def set_application_credentials(cls, app_id: str, app_secret: str) -> None:
-        """
-        Set the application credentials for interacting with the Instagram Graph API.
-
-        Args:
-            app_id (str): The application ID.
-            app_secret (str): The application secret key.
-
-        Raises:
-            CredentialError: If app_id or app_secret is not a string.
-        """
-        
-        if not isinstance(app_id, str):
-            raise CredentialError("app_id must be a string")
-        if not isinstance(app_secret, str):
-            raise CredentialError("app_secret must be a string")
-        
-        if not app_id.strip():
-            raise CredentialError("app_id cannot be empty or whitespace-only")
-        if not app_secret.strip():
-            raise CredentialError("app_secret cannot be empty or whitespace-only")
-
-        cls._app_id = app_id
-        cls._app_secret = app_secret
