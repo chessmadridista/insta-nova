@@ -68,7 +68,7 @@ class Client:
         return "Some value"
     
     @classmethod
-    def set_app_credentials(cls, app_id: str, app_secret: str) -> None:
+    def set_application_credentials(cls, app_id: str, app_secret: str) -> None:
         """
         Set the application credentials for interacting with the Instagram Graph API.
 
