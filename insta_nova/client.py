@@ -6,6 +6,7 @@ from .exceptions import (
     IncorrectAuthCodeError,
     ExpiredAuthCodeError,
     AuthCodeAlreadyUsedError,
+    EmptyAuthCodeError,
 )
 
 logger = logging.getLogger(__name__)
@@ -78,9 +79,22 @@ class Client:
         """
         if not isinstance(authorization_code, str):
             raise AuthCodeMissingError
-        
         if not authorization_code.strip():
             raise EmptyAuthCodeError
+        if not authorization_code.strip():
+            raise EmptyAuthCodeError
+        if not authorization_code.strip():
+            raise EmptyAuthCodeError
+        if not authorization_code.strip():
+            raise EmptyAuthCodeError
+        if not authorization_code.strip():
+            raise EmptyAuthCodeError
+        if not authorization_code.strip():
+            raise EmptyAuthCodeError
+        CredentialError, 
+        IncorrectAuthCodeError,
+        ExpiredAuthCodeError,
+        AuthCodeAlreadyUsedError,
         INSTAGRAM_ACCESS_TOKEN_URL = "https://api.instagram.com/oauth/access_token"
         REDIRECT_URI = "https://localhost:5173/verify-instagram-account-connection-code"
         data = {

@@ -12,3 +12,6 @@ class ExpiredAuthCodeError(Exception):
 
 class AuthCodeAlreadyUsedError(Exception):
     pass
+
+class EmptyAuthCodeError(Exception):
+    pass
