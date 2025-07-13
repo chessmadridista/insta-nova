@@ -21,9 +21,9 @@ class Client:
     ```
     from insta_nova.client import Client
 
-    Client.app_id = "your-app-id"
-    Client.app_secret = "your-app-secret"
-
+    app_id = "your-app-id"
+    app_secret = "your-app-secret"
+    Client.set_application_credentials(app_id=app_id, app_secret=app_secret)
     client = Client()
     ```
     This way, you will not need to define the app id
