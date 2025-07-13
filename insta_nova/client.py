@@ -1,18 +1,9 @@
 import requests
 import logging
-from .exceptions import (
-    CredentialError, 
-    AuthCodeMissingError,
-    IncorrectAuthCodeError,
-    ExpiredAuthCodeError,
-    AuthCodeAlreadyUsedError,
-    EmptyAuthCodeError,
+from .decorators import (
+    validate_set_application_credentials,
+    validate_get_access_token,
 )
-
-logger = logging.getLogger(__name__)
-
-class CredentialError(Exception):
-    pass
 
 class Client:
     """
@@ -38,6 +29,7 @@ class Client:
         self.access_token = access_token
     
     @classmethod
+    @validate_set_application_credentials
     def set_application_credentials(cls, app_id: str, app_secret: str) -> None:
         """
         Set the application credentials for interacting with the Instagram Graph API.
@@ -49,21 +41,11 @@ class Client:
         Raises:
             CredentialError: If app_id or app_secret is not a string.
         """
-        
-        if not isinstance(app_id, str):
-            raise CredentialError("app_id must be a string")
-        if not isinstance(app_secret, str):
-            raise CredentialError("app_secret must be a string")
-        
-        if not app_id.strip():
-            raise CredentialError("app_id cannot be empty or whitespace-only")
-        if not app_secret.strip():
-            raise CredentialError("app_secret cannot be empty or whitespace-only")
-
         cls._app_id = app_id
         cls._app_secret = app_secret
 
-    def get_access_token(self, authorization_code: str) -> dict:
+    @validate_get_access_token
+    def get_access_token(self, authorization_code: str, redirect_uri: str) -> dict:
         """
         Get the Instagram access token for the user.
 
@@ -77,29 +59,22 @@ class Client:
             ExpiredAuthCodeError: If the auth code has expired.
             AuthCodeAlreadyUsedError: If the auth code has already been used in a prior request.
         """
-        if not isinstance(authorization_code, str):
-            raise AuthCodeMissingError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
-        if not authorization_code.strip():
-            raise EmptyAuthCodeError
         INSTAGRAM_ACCESS_TOKEN_URL = "https://api.instagram.com/oauth/access_token"
-        REDIRECT_URI = "https://localhost:5173/verify-instagram-account-connection-code"
-        data = {
-            'client_id': self.app_id,
-            'client_secret': insta_app_client_secret,
+        payload = {
+            'client_id': self._app_id,
+            'client_secret': self._app_secret,
             'grant_type': 'authorization_code',
             'redirect_uri': redirect_uri,
-            'code': authorization_code
+            'code': authorization_code,
         }
-    
-        return "Some value"
-    
+
+        try:
+            response = requests.post(INSTAGRAM_ACCESS_TOKEN_URL, payload)
+            if response.status_code == 200:
+                result = response.json()
+                return result
+            elif response.status_code == 400:
+                raise Exception
+        except requests.exceptions.RequestException as e:
+            raise ConnectionError(f"Failed to connect to Instagram API: {e}")
+        
