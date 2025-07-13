@@ -86,9 +86,9 @@ class Client:
             raise CredentialError("app_secret must be a string")
         
         if not app_id.strip():
-            raise CredentialError("app_id cannot be empty")
+            raise CredentialError("app_id cannot be empty or whitespace-only")
         if not app_secret.strip():
-            raise CredentialError("app_secret cannot be empty")
+            raise CredentialError("app_secret cannot be empty or whitespace-only")
 
         cls._app_id = app_id
         cls._app_secret = app_secret
