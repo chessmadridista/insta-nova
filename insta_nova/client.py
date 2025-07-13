@@ -63,7 +63,7 @@ class Client:
         cls._app_id = app_id
         cls._app_secret = app_secret
 
-    def get_access_token(self, authorization_code):
+    def get_access_token(self, authorization_code: str) -> dict:
         """
         Get the Instagram access token for the user.
 
@@ -91,10 +91,6 @@ class Client:
             raise EmptyAuthCodeError
         if not authorization_code.strip():
             raise EmptyAuthCodeError
-        CredentialError, 
-        IncorrectAuthCodeError,
-        ExpiredAuthCodeError,
-        AuthCodeAlreadyUsedError,
         INSTAGRAM_ACCESS_TOKEN_URL = "https://api.instagram.com/oauth/access_token"
         REDIRECT_URI = "https://localhost:5173/verify-instagram-account-connection-code"
         data = {
