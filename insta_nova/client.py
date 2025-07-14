@@ -23,10 +23,10 @@ class Client:
     """
     _app_id = None
     _app_secret = None
-    _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0/"
+    _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0"
     
     def __init__(self, access_token=None):
-        self.access_token = access_token
+        self._access_token = access_token
     
     @classmethod
     @validate_set_application_credentials
@@ -69,7 +69,7 @@ class Client:
         }
 
         try:
-            response = requests.post(INSTAGRAM_ACCESS_TOKEN_URL, payload)
+            response = requests.post(INSTAGRAM_ACCESS_TOKEN_URL, data=payload)
             if response.status_code == 200:
                 result = response.json()
                 return result
@@ -77,4 +77,31 @@ class Client:
                 raise Exception
         except requests.exceptions.RequestException as e:
             raise ConnectionError(f"Failed to connect to Instagram API: {e}")
+    
+    @validate_create_image_container
+    def create_image_container(self, instagram_user_id: str, image_url: str) -> str:
+        """
+        Create container for the image that you want to publish on Instagram.
+
+        Args:
+            instagram_user_id (str): The id associated with the Instagram account which
+                will be used to post the photo.
+            image_url (str): The url of the image that needs to be posted on Instagram.
         
+        Returns:
+            container_id (str): The id of the created container if successful.
+        """
+        END_POINT = f'/{instagram_user_id}/media'
+        URL = self._INSTAGRAM_GRAPH_API_BASE_URL + END_POINT
+        payload = {
+            "access_token": self._access_token,
+            "image_url": image_url,
+        }
+
+        try:
+            response = requests.post(URL, data=payload)
+            container_id = response.json()["id"]
+            return container_id
+        except:
+            raise
+    
