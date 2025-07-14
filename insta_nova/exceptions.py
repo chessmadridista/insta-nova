@@ -15,3 +15,12 @@ class AuthCodeAlreadyUsedError(Exception):
 
 class EmptyAuthCodeError(Exception):
     pass
+
+class AuthorizationCodeTypeError(Exception):
+    pass
+
+class RedirectUriTypeError(Exception):
+    pass
+
+class InstagramUserIdTypeError(Exception):
+    pass
