@@ -105,3 +105,41 @@ class Client:
         except:
             raise
     
+    @validate_publish_image_container
+    def publish_image_container(self, instagram_user_id: str, container_id: str) -> str:
+        """
+        Publish the image container to Instagram to post your photo. The image will be posted
+        on Instagram if this function executes successfully.
+
+        Args:
+            instagram_user_id (str): The id associated with the Instagram account which
+                will be used to post the photo.
+            
+            
+        """
+        _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0"
+        END_POINT = f'/{instagram_user_id}/media_publish'
+        URL = _INSTAGRAM_GRAPH_API_BASE_URL + END_POINT
+        payload = {
+            "creation_id": container_id,
+            "access_token": self._access_token,
+        }
+        
+        try:
+            response = requests.post(URL, data=payload)
+            if response.status_code == 200:
+                media_id = response.json()["id"]
+                return media_id
+            elif response.status_code == 400:
+                error_response = response.json()
+                error_message = error_response["error"]["message"]
+                raise Exception(error_message)
+            else:
+                raise Exception("Unknown error.")
+        except:
+            raise
+    
+    def create_and_publish_image_container(self, instagram_user_id: str, image_url: str) -> str:
+        container_id = self.create_image_container(instagram_user_id, image_url)
+        media_id = self.publish_image_container(instagram_user_id, container_id)
+        return media_id
