@@ -1,5 +1,4 @@
 import requests
-import logging
 from .decorators import (
     validate_set_application_credentials,
     validate_get_access_token,
