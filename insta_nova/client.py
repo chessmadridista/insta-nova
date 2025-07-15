@@ -24,7 +24,7 @@ class Client:
     _app_secret = None
     _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0"
     
-    def __init__(self, access_token=None):
+    def __init__(self, access_token: str | None = None):
         self._access_token = access_token
     
     @classmethod
