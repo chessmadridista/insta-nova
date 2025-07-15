@@ -139,6 +139,23 @@ class Client:
             raise
     
     def create_and_publish_image_container(self, instagram_user_id: str, image_url: str) -> str:
+        """
+        Creates and publishes the image container on Instagram.
+        
+        Note: This function is not stable. If the publish_image_container function fails then
+            the call to the Instagram Graph API would have been wasted. Please use the separate
+            functions create_image_container and publish_image_container in a sequential manner to avoid
+            this issue.
+
+        Args:
+            instagram_user_id (str): The id associated with the Instagram account which
+                will be used to post the photo.
+            image_url (str): The url of the image that needs to be posted on Instagram.
+
+        Returns:
+            media_id (str): The id associated with the published media after it has been 
+                published successfully. 
+        """
         container_id = self.create_image_container(instagram_user_id, image_url)
         media_id = self.publish_image_container(instagram_user_id, container_id)
         return media_id
