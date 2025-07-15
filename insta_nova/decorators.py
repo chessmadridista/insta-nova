@@ -5,16 +5,18 @@ from .validators import (
     validate_authorization_code,
     validate_redirect_uri,
 )
+from typing import Callable, TypeVar, Any
+WrappedFunc = TypeVar("WrappedFunc", bound=Callable[..., Any])
 
-def validate_set_application_credentials(func):
+def validate_set_application_credentials(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
-    def wrapper(cls, app_id, app_secret):
+    def wrapper(cls: type[Any], app_id: str, app_secret: str) -> Callable[..., Any]:
         validate_app_id(app_id)
         validate_app_secret(app_secret)
         return func(cls, app_id, app_secret)
     return wrapper
 
-def validate_get_access_token(func):
+def validate_get_access_token(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
     def wrapper(self, authorization_code, redirect_uri):
         validate_authorization_code(authorization_code)
@@ -22,3 +24,10 @@ def validate_get_access_token(func):
         return func(self, authorization_code, redirect_uri)
     return wrapper
 
+def validate_publish_image_container(func):
+    @wraps(func)
+    def wrapper(self, instagram_user_id, container_id):
+        validate_instagram_user_id(instagram_user_id)
+        validate_container_id(container_id)
+        return func(self, instagram_user_id, container_id)
+    return wrapper
