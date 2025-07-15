@@ -60,7 +60,7 @@ class Client:
             AuthCodeAlreadyUsedError: If the auth code has already been used in a prior request.
         """
         INSTAGRAM_ACCESS_TOKEN_URL = "https://api.instagram.com/oauth/access_token"
-        payload = {
+        payload: dict[str, Any] = {
             'client_id': self._app_id,
             'client_secret': self._app_secret,
             'grant_type': 'authorization_code',
