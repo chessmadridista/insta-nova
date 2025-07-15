@@ -122,7 +122,7 @@ class Client:
         _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0"
         END_POINT = f'/{instagram_user_id}/media_publish'
         URL = _INSTAGRAM_GRAPH_API_BASE_URL + END_POINT
-        payload = {
+        payload: dict[str, Any] = {
             "creation_id": container_id,
             "access_token": self._access_token,
         }
