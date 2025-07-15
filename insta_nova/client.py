@@ -3,6 +3,7 @@ from .decorators import (
     validate_set_application_credentials,
     validate_get_access_token,
 )
+from typing import Any
 
 class Client:
     """
@@ -44,7 +45,7 @@ class Client:
         cls._app_secret = app_secret
 
     @validate_get_access_token
-    def get_access_token(self, authorization_code: str, redirect_uri: str) -> dict:
+    def get_access_token(self, authorization_code: str, redirect_uri: str) -> dict[str, Any]:
         """
         Get the Instagram access token for the user.
 
@@ -73,7 +74,9 @@ class Client:
                 result = response.json()
                 return result
             elif response.status_code == 400:
-                raise Exception
+                raise Exception("API error.")
+            else:
+                raise Exception(f"Unexpected status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
             raise ConnectionError(f"Failed to connect to Instagram API: {e}")
     
