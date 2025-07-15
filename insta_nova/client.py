@@ -95,7 +95,7 @@ class Client:
         """
         END_POINT = f'/{instagram_user_id}/media'
         URL = self._INSTAGRAM_GRAPH_API_BASE_URL + END_POINT
-        payload = {
+        payload: dict[str, Any] = {
             "access_token": self._access_token,
             "image_url": image_url,
         }
