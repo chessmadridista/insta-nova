@@ -17,7 +17,7 @@ def validate_set_application_credentials(func: Callable[..., Any]) -> Callable[.
 
 def validate_get_access_token(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
-    def wrapper(self: object, authorization_code, redirect_uri):
+    def wrapper(self: object, authorization_code: str, redirect_uri: str) -> Callable[..., Any]:
         validate_authorization_code(authorization_code)
         validate_redirect_uri(redirect_uri)
         return func(self, authorization_code, redirect_uri)
