@@ -4,6 +4,8 @@ from .validators import (
     validate_app_secret,
     validate_authorization_code,
     validate_redirect_uri,
+    validate_instagram_user_id,
+    validate_container_id,
 )
 from typing import Callable, Any
 
@@ -33,7 +35,7 @@ def validate_create_image_container(func: Callable[..., Any]) -> Callable[..., A
 
 def validate_publish_image_container(func: Callable[..., Any]) -> Callable[..., Any]:
     @wraps(func)
-    def wrapper(self: object, instagram_user_id, container_id):
+    def wrapper(self: object, instagram_user_id: str, container_id: str) -> Callable[..., Any]:
         validate_instagram_user_id(instagram_user_id)
         validate_container_id(container_id)
         return func(self, instagram_user_id, container_id)
