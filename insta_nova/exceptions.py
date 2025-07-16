@@ -4,26 +4,29 @@ class CredentialTypeError(TypeError):
 class CredentialValueError(ValueError):
     pass
 
-class AuthCodeMissingError(Exception):
+class AuthorizationCodeTypeError(TypeError):
     pass
 
-class IncorrectAuthCodeError(Exception):
+class AuthorizationCodeValueError(ValueError):
     pass
 
-class ExpiredAuthCodeError(Exception):
+class RedirectUriTypeError(TypeError):
     pass
 
-class AuthCodeAlreadyUsedError(Exception):
+class RedirectUriValueError(ValueError):
     pass
 
-class EmptyAuthCodeError(Exception):
+class RedirectUriFormatError(ValueError):
     pass
 
-class AuthorizationCodeTypeError(Exception):
+class InstagramUserIdTypeError(TypeError):
     pass
 
-class RedirectUriTypeError(Exception):
+class InstagramUserIdValueError(ValueError):
     pass
 
-class InstagramUserIdTypeError(Exception):
+class ContainerIdTypeError(TypeError):
+    pass
+
+class ContainerIdValueError(ValueError):
     pass

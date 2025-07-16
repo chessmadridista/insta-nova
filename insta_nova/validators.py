@@ -7,8 +7,14 @@ from .exceptions import (
     CredentialTypeError, 
     CredentialValueError,
     AuthorizationCodeTypeError,
+    AuthorizationCodeValueError,
     RedirectUriTypeError,
+    RedirectUriValueError,
+    RedirectUriFormatError,
     InstagramUserIdTypeError,
+    InstagramUserIdValueError,
+    ContainerIdTypeError,
+    ContainerIdValueError,
 )
 from typing import Type
 
