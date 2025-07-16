@@ -4,16 +4,24 @@ before sending a request to the Instagram API.
 """
 from urllib.parse import urlparse
 from .exceptions import (
-    CredentialError, 
-    AuthCodeMissingError,
-    IncorrectAuthCodeError,
-    ExpiredAuthCodeError,
-    AuthCodeAlreadyUsedError,
-    EmptyAuthCodeError,
+    CredentialTypeError, 
+    CredentialValueError,
     AuthorizationCodeTypeError,
     RedirectUriTypeError,
     InstagramUserIdTypeError,
 )
+from typing import Type
+
+def _validate_non_empty_string(
+    value: str,
+    field_name: str,
+    type_error: Type[Exception],
+    value_error: Type[Exception]
+) -> None:
+    if not isinstance(value, str):  # type: ignore[arg-type]
+        raise type_error(f"{field_name} must be a string")
+    if not value.strip():
+        raise value_error(f"{field_name} cannot be empty or whitespace-only")
 
 def _validate_url(url: str) -> bool:
     try:
@@ -23,20 +31,15 @@ def _validate_url(url: str) -> bool:
         return False
 
 def validate_app_id(app_id: str) -> None:
-    if not isinstance(app_id, str): # type: ignore[arg-type]
-        raise CredentialError("app_id must be a string")
-    if not app_id.strip():
-        raise CredentialError("app_id cannot be empty or whitespace-only")
+    _validate_non_empty_string(app_id, "app_id", CredentialTypeError, CredentialValueError)
 
 def validate_app_secret(app_secret: str) -> None:
-    if not isinstance(app_secret, str):
-        raise CredentialError("app_secret must be a string")
-    if not app_secret.strip():
-        raise CredentialError("app_secret cannot be empty or whitespace-only")
+    _validate_non_empty_string(app_secret, "app_secret", CredentialTypeError, CredentialValueError)
 
 def validate_authorization_code(authorization_code: str) -> None:
     if not isinstance(authorization_code, str):
         raise AuthorizationCodeTypeError("redirect_uri must be a string")    
+    _validate_non_empty_string(app_secret, "app_secret", CredentialError)
 
 def validate_redirect_uri(redirect_uri: str) -> None:
     if not isinstance(redirect_uri, str):
