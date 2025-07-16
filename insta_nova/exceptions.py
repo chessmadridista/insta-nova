@@ -1,7 +1,7 @@
-class CredentialTypeError(Exception):
+class CredentialTypeError(TypeError):
     pass
 
-class CredentialValueError(Exception):
+class CredentialValueError(ValueError):
     pass
 
 class AuthCodeMissingError(Exception):
