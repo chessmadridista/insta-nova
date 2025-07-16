@@ -27,7 +27,7 @@ def _validate_url(url: str) -> bool:
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
-    except:
+    except Exception:
         return False
 
 def validate_app_id(app_id: str) -> None:
@@ -37,28 +37,17 @@ def validate_app_secret(app_secret: str) -> None:
     _validate_non_empty_string(app_secret, "app_secret", CredentialTypeError, CredentialValueError)
 
 def validate_authorization_code(authorization_code: str) -> None:
-    if not isinstance(authorization_code, str):
-        raise AuthorizationCodeTypeError("redirect_uri must be a string")    
-    _validate_non_empty_string(app_secret, "app_secret", CredentialError)
+        _validate_non_empty_string(authorization_code, "authorization_code", AuthorizationCodeTypeError, AuthorizationCodeValueError)
 
 def validate_redirect_uri(redirect_uri: str) -> None:
-    if not isinstance(redirect_uri, str):
-        raise RedirectUriTypeError("redirect_uri must be a string")
-    if not redirect_uri.strip():
-        raise RedirectUriValueError("redirect_uri cannot be empty or whitespace-only")
+    _validate_non_empty_string(redirect_uri, "redirect_uri", RedirectUriTypeError, RedirectUriValueError)
 
     is_redirect_uri_valid = _validate_url(redirect_uri)
     if not is_redirect_uri_valid:
         raise RedirectUriFormatError("redirect_uri is an invalid uri")
 
 def validate_instagram_user_id(instagram_user_id: str) -> None:
-    if not isinstance(instagram_user_id, str):
-        raise InstagramUserIdTypeError("instagram_user_id must be a string")
-    if not instagram_user_id.strip():
-        raise InstagramUserId("redirect_uri cannot be empty or whitespace-only")
+    _validate_non_empty_string(instagram_user_id, "instagram_user_id", InstagramUserIdTypeError, InstagramUserIdValueError)
 
 def validate_container_id(container_id: str) -> None:
-    if not isinstance(container_id, str):
-        raise InstagramUserIdTypeError("instagram_user_id must be a string")
-    if not container_id.strip():
-        raise RedirectUriValueError("redirect_uri cannot be empty or whitespace-only")
+    _validate_non_empty_string(container_id, "container_id", ContainerIdTypeError, ContainerIdValueError)

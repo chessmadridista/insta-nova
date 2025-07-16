@@ -104,7 +104,7 @@ class Client:
             response = requests.post(URL, data=payload)
             container_id = response.json()["id"]
             return container_id
-        except:
+        except Exception:
             raise
     
     @validate_publish_image_container
@@ -138,7 +138,7 @@ class Client:
                 raise Exception(error_message)
             else:
                 raise Exception("Unknown error.")
-        except:
+        except Exception:
             raise
     
     def create_and_publish_image_container(self, instagram_user_id: str, image_url: str) -> str:
