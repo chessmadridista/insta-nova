@@ -21,8 +21,8 @@ from typing import Type
 def _validate_non_empty_string(
     value: str,
     field_name: str,
-    type_error: Type[Exception],
-    value_error: Type[Exception]
+    type_error: Type[TypeError],
+    value_error: Type[ValueError]
 ) -> None:
     if not isinstance(value, str):  # type: ignore[arg-type]
         raise type_error(f"{field_name} must be a string")
