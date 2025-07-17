@@ -1,3 +1,5 @@
 venv
 __pycache__
-debug.py
+debug
+dist/
+*.egg-info/

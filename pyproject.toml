@@ -9,7 +9,7 @@ description = "Wrapper for the Instagram Graph API v23.0."
 authors = [
   { name = "Lavanya Mishra", email = "lavanyamishra1996dev@gmail.com" }
 ]
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
