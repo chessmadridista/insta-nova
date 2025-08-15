@@ -73,11 +73,12 @@ class Client:
 
         try:
             response = requests.post(INSTAGRAM_ACCESS_TOKEN_URL, data=payload)
+            response_body = response.json()
+
             if response.status_code == 200:
-                result = response.json()
-                return result
+                return response_body
             elif response.status_code == 400:
-                raise Exception("API error.")
+                raise Exception(f"Instagram API error: {response_body}")
             else:
                 raise Exception(f"Unexpected status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
