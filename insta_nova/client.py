@@ -106,10 +106,15 @@ class Client:
 
         try:
             response = requests.post(URL, data=payload)
-            container_id = response.json()["id"]
-            return container_id
-        except Exception:
-            raise
+
+            if response.status_code == 200:
+                container_id = response.json()["id"]
+                return container_id
+            else:
+                response_body = response.json()
+                raise Exception(f"Instagram API error: {response_body}")
+        except requests.exceptions.RequestException as e:
+            raise ConnectionError(f"Failed to connect to Instagram API: {e}")
     
     @validate_publish_image_container
     def publish_image_container(self, instagram_user_id: str, container_id: str) -> str:
@@ -120,8 +125,10 @@ class Client:
         Args:
             instagram_user_id (str): The id associated with the Instagram account which
                 will be used to post the photo.
-            
-            
+            container_id (str): The container id associated with the image to be published.
+
+        Returns:
+            media_id (str): The id of the published media.
         """
         _INSTAGRAM_GRAPH_API_BASE_URL = "https://graph.instagram.com/v23.0"
         END_POINT = f'/{instagram_user_id}/media_publish'
@@ -133,17 +140,18 @@ class Client:
         
         try:
             response = requests.post(URL, data=payload)
+
             if response.status_code == 200:
                 media_id = response.json()["id"]
                 return media_id
             elif response.status_code == 400:
-                error_response = response.json()
-                error_message = error_response["error"]["message"]
-                raise Exception(error_message)
+                response_body = response.json()
+                raise Exception(f"Instagram API error: {response_body}")
             else:
-                raise Exception("Unknown error.")
-        except Exception:
-            raise
+                response_body = response.json()
+                raise Exception(f"Instagram API error: {response_body}")
+        except requests.exceptions.RequestException as e:
+            raise ConnectionError(f"Failed to connect to Instagram API: {e}")
     
     def create_and_publish_image_container(self, instagram_user_id: str, image_url: str) -> str:
         """
