@@ -54,6 +54,7 @@ class Client:
         Args:
             authorization_code: The authorization code that is received after the user allows
                                 access to his/her Instagram account.
+            redirect_uri: The redirect URI that is mentioned in the Insta developer settings.
         
         Raises:
             AuthCodeMissingError: If the auth code is not present.
