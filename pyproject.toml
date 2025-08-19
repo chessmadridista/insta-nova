@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "insta-nova"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wrapper for the Instagram Graph API v23.0."
 authors = [
   { name = "Lavanya Mishra", email = "lavanyamishra1996dev@gmail.com" }
