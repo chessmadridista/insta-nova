@@ -21,3 +21,5 @@ Python wrapper for the Instagram API and the Instagram Graph API v23.
 - `README.md`: contains information about the project.
 - `LICENSE`: contains the license of the project.
 - If a directory contains `Notes.md` or `README.md`, it means that those files are applicable for that specific directory only. For example, `Notes.md` inside the `tests/` directory contains the braindump and raw ideas related to testing only.
+- `venv`: contains the virtual environment.
+- `dev-venv`: contains the virtual environment for testing.
