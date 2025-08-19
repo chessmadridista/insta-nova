@@ -42,3 +42,6 @@ dev = [
   "mypy",
   "pytest"
 ]
+
+[tool.setuptools]
+packages = ["insta_nova"]
